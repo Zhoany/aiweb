@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export const Login = () => {
+const Login = () => {
   const [username, setUsername] = useState("");
-  const router = useRouter(); // 获取 router 实例
+  const router = useRouter();
   const [error, setError] = useState("");
-  const baseURL = process.env.NEXT_PUBLIC_BASE_URL; // 从环境变量读取 baseURL
+  const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -29,11 +29,9 @@ export const Login = () => {
       const data = await response.json();
 
       if (response.ok && data.token) {
-        // 如果返回的数据中有 token，则保存 token 并跳转到 chat 页面
-        localStorage.setItem("Authorization", data.token); // 保存 token 到本地存储
-        router.push("/chat"); // 跳转到 chat 页面
+        localStorage.setItem("Authorization", data.token);
+        router.push("/chat");
       } else {
-        // 如果没有 token，则显示错误信息
         setError("用户名或密码错误");
       }
     } catch (error) {
